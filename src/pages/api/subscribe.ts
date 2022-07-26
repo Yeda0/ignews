@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import {getSession} from 'next-auth/react'
 import {stripe} from '../../services/stripe'
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req : NextApiRequest , res : NextApiResponse) => {
     if(req.method === 'POST') {
 
@@ -13,7 +14,7 @@ export default async (req : NextApiRequest , res : NextApiResponse) => {
 
         const stripeCheckoutSession = await stripe.checkout.sessions.create({
             customer : stripeCustomer.id,
-            payment_method_options : ['card'],
+            payment_method_types : ["card"],
             billing_address_collection : 'required',
             line_items : [
                 {price : 'price_1LN1KfBFuPq048KKIcPAy7Lz', quantity : 1}
